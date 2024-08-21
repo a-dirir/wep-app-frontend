@@ -1,0 +1,26 @@
+
+<div style="min-width: 1000px;margin: 0 auto">
+    <h1 mat-dialog-title>{{title}}</h1>
+    <hr>
+    <div style="overflow-x: scroll;">
+        <mat-dialog-content class="mat-typography">
+             <div>
+                <jsonforms 
+                    [data]="formData" 
+                    [schema]="formModel" 
+                    [uischema]="formUIModel" 
+                    [renderers]="renderers"
+                    (dataChange)="onFormChange($event)"
+                >
+                </jsonforms>
+            </div> 
+
+        </mat-dialog-content>
+    </div>
+    
+    <hr>
+    <mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="closeDialogWithData()">Save</button>
+    </mat-dialog-actions>
+</div>

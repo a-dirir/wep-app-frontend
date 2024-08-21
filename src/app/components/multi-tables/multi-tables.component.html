@@ -1,0 +1,25 @@
+<div style="min-width: 1000px;margin: 0 auto">
+    <h1 mat-dialog-title>{{title}}</h1>
+    <hr>
+    <div style="overflow-x: scroll;">
+        <mat-dialog-content class="mat-typography">
+            <div>
+                <mat-tab-group *ngFor="let table_name of tables_sequence">
+                    <div >
+                        <mat-tab label={{table_name}}> 
+                            <app-informative-table [data]="data_records[table_name]" [cols]="columns_order[table_name]"></app-informative-table>
+                        </mat-tab>
+                    </div>
+                    
+                  </mat-tab-group>
+            </div> 
+
+        </mat-dialog-content>
+    </div>
+    
+    <hr>
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="warn" mat-dialog-close>Exit</button>
+        <!-- <button mat-raised-button color="primary" (click)="closeDialogWithData()">Delete</button> -->
+    </mat-dialog-actions>
+</div>

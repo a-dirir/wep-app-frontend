@@ -1,0 +1,14 @@
+<div style="max-width: 1000px">
+  <h1 mat-dialog-title [style.background-color]="getTitleColor()" 
+    style="color: white; margin-left: 0; padding-left: 10px;">Alert</h1>
+  <mat-dialog-content style="color: black; margin-left: 0; padding-left: 10px;">
+  <h2>{{ data.message }}</h2>
+
+  <app-informative-table *ngIf="data.row != null" [data]="data.row" [cols]="data.col"></app-informative-table>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" mat-dialog-close>Close</button>
+  <button *ngIf="data.type == 'confirm'" mat-raised-button color="warn" (click)="closeDialogWithData()">Confirm</button>
+  </mat-dialog-actions>
+</div>
