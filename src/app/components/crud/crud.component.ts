@@ -14,6 +14,7 @@ import * as clientModel from '../../models/forms/app/customers/client/clients';
 })
 export class CrudComponent implements OnInit{
   @Input() crudInput: any;
+  @Output() crudOutput = new EventEmitter<any>();
   @ViewChild(TableComponent) table:any;
 
   pageTitle: any = 'Clients';
@@ -68,6 +69,8 @@ export class CrudComponent implements OnInit{
     }
     else if(action == 'delete'){
       this.confirmDelete(event.data);
+    }else{
+      this.crudOutput.emit(event);
     }
   }
 

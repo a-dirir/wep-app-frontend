@@ -37,7 +37,9 @@ export let formModel:any = {
             "description": "Please enter sub client name.",
             "enum": [
                 "admin",
-                "user"
+                "readonly",
+                'backoffice-user',
+                'backoffice-admin',
                 ]
         }, 
     },

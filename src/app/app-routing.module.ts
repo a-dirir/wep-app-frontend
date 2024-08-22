@@ -12,7 +12,6 @@ const routes: Routes = [
     path: 'customers',  children: CustomerRoutes
   },
 
-
   {
     path: 'admin',  children: AdminRoutes
   },
