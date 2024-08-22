@@ -11,8 +11,6 @@ import { DataStoreService } from './datastore.service';
     providedIn: 'root'
   })
 export class RequestService {
-
-    //endpoint: string = 'crm-backend-alb-982125272.me-central-1.elb.amazonaws.com'
     // endpoint: string = 'http://127.0.0.1:80/'
     endpoint: string = ''
     constructor(private router: Router) { }

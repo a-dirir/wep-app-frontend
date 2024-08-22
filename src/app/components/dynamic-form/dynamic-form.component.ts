@@ -47,24 +47,30 @@ export class DynamicFormComponent{
     }
   }
 
-
-
-  onFormChange(event:any){
-    for (let field in event){
-      // check if there is format property in the field
-      if(this.formModel['properties'][field] != undefined){
-        if(this.formModel['properties'][field].format != undefined){
-          if(this.formModel['properties'][field].format == 'date'){
-            // add one day to the date
-            let date = new Date(event[field]);
-            date.setDate(date.getDate() + 1);
-            event[field] = date.toISOString().split('T')[0];
+  onFormChange(event: any) {
+    for (let field in event) {
+      // Check if there is a format property in the field
+      if (this.formModel['properties'][field] !== undefined) {
+        if (this.formModel['properties'][field].format !== undefined) {
+          if (this.formModel['properties'][field].format === 'date') {
+            // Check if event[field] is a valid date
+            let eventDate = new Date(event[field]);
+            let fromDataDate = new Date(this.formData[field]);
+            
+            // if formDataDate is undefined or not equal to eventDate, add one day to eventDate
+            if(fromDataDate === undefined || fromDataDate.getDate() !== eventDate.getDate()){
+              eventDate.setDate(eventDate.getDate() + 1);
+            }
+            // Update the event[field] with the new date
+            event[field] = eventDate.toISOString().split('T')[0];
           }
         }
       }
     }
     this.formData = event;
   }
+  
+
 
   closeDialogWithData(): void {
     this.dialogRef.close(this.formData);
