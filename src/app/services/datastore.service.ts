@@ -7,11 +7,8 @@ import { RequestService } from './request.service';
   providedIn: 'root'
 })
 export class DataStoreService {
-  user_info: any = null;
-  domainData: any = {};
-  private _currentDomainName: BehaviorSubject<any> = new BehaviorSubject<any>('CurrentDomainName');
-  private _currentDomainType: BehaviorSubject<any> = new BehaviorSubject<any>('CurrentDomainType');
-
+  userInfo: any = null;
+  
   private _currentView: BehaviorSubject<any> = new BehaviorSubject<any>('main');
   
   mainRoutes: any[] = mainRoutes;
@@ -21,74 +18,15 @@ export class DataStoreService {
     this._currentView.next('main');
   }
 
-  set_user_info(user_info: any){
-    this.user_info = user_info;
+  setUserInfo(userInfo: any){
+    this.userInfo = userInfo;
   }
 
-  get_user_info(){
-    return this.user_info;
+  getUserInfo(){
+    return this.userInfo;
   }
 
-  getDomainData() {
-    const currentDomainType = this._currentDomainType.getValue();
-    if (currentDomainType === 'Global'){
-      return null;
-    }
 
-    // Check if domainData is already loaded
-    if (currentDomainType in this.domainData){
-      return this.domainData[currentDomainType];
-    } else {
-      // Load domainData
-      this.loadDomainData();
-      return this.domainData[currentDomainType];
-    }
-  }
-
-  async loadDomainData() {
-    const currentDomainType = this._currentDomainType.getValue();
-
-    let message = {
-      'access': {
-        'action': 'IAM:DomainView:list',
-        'resource': ['*'],
-        'customer': ['*']
-      },
-      'data': {
-        'domain_name': currentDomainType
-      }
-    }
-
-    try {
-      let response = await this.request.sendRequest(message);
-      // Add new key to domainData
-      this.domainData[currentDomainType] = response['msg']['data'];
-      this._currentDomainType.next(currentDomainType);
-    } catch (error) {
-      this.domainData[currentDomainType] = null;
-      this._currentDomainType.next('Global');
-    }
-  }
-
-  getDomainName() {
-    return this._currentDomainName.getValue();
-  }
-
-  setDomainName(domainName: string) {
-    this._currentDomainName.next(domainName);
-  }
-
-  changeDomainType(domainType: string) {
-    this._currentDomainType.next(domainType);
-  }
-
-  get currentDomain$() {
-    return this._currentDomainName.asObservable();
-  }
-
-  get domainType$() {
-    return this._currentDomainType.asObservable(); 
-  }
 
   get currentView$() {
     return this._currentView.asObservable();
@@ -99,8 +37,7 @@ export class DataStoreService {
   }
 
   clear() {
-    this.user_info = null;
-    this.domainData = {};
+    this.userInfo = null;
     this._currentView.next('main');
     this.mainRoutes = mainRoutes;
   }

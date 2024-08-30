@@ -1,9 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { NavigatorService } from './navigator.service';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { DataStoreService } from './datastore.service';
 
 // create a function to send a request to the server
 
@@ -11,9 +6,8 @@ import { DataStoreService } from './datastore.service';
     providedIn: 'root'
   })
 export class RequestService {
-    // endpoint: string = 'http://127.0.0.1:80/'
-    endpoint: string = ''
-    constructor(private router: Router) { }
+    endpoint: string = 'http://127.0.0.1:80/'
+    constructor() { }
     // create a function to send a request to the server
     sendRequest(body:any, headers:any = null, path:string = 'app', method:string = 'POST') {                
         if (headers == null) {

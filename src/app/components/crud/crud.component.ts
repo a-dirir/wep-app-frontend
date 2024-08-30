@@ -1,10 +1,10 @@
-import { Component, OnInit,AfterViewInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, EventEmitter} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { RequestService } from 'src/app/services/request.service';
 import { TableComponent } from '../table/table.component';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { AlertComponent } from '../alert/alert.component';
-import * as clientModel from '../../models/forms/app/customers/client/clients';
+import { MultiTablesComponent } from '../multi-tables/multi-tables.component';
 
 
 @Component({
@@ -17,16 +17,17 @@ export class CrudComponent implements OnInit{
   @Output() crudOutput = new EventEmitter<any>();
   @ViewChild(TableComponent) table:any;
 
-  pageTitle: any = 'Clients';
-  endpoint: any = 'clients';
-  tableModel: any = clientModel.tableModel;
-  formModel: any = clientModel.formModel;
-  formUIModel: any = clientModel.formUIModel;
-  filter: any = clientModel.filter;
+  pageTitle: any;
+  service: any;
+  controller: any;
+  tableModel: any;
+  formModel: any;
+  formUIModel: any;
+  filter: any;
 
   data: any;
   originalData: any;
-  columnsAliases: any;
+  cols: any;
   selctedRow: any;
 
   options: any = {};
@@ -36,7 +37,8 @@ export class CrudComponent implements OnInit{
 
   ngOnInit(): void {
     this.pageTitle = this.crudInput.data['pageTitle'];
-    this.endpoint = this.crudInput.data['endpoint'];
+    this.service = this.crudInput.data['service'];
+    this.controller = this.crudInput.data['controller'];
     this.tableModel = this.crudInput.data['dataModel'].tableModel;
     this.formModel = this.crudInput.data['dataModel'].formModel;
     this.formUIModel = this.crudInput.data['dataModel'].formUIModel;
@@ -69,10 +71,15 @@ export class CrudComponent implements OnInit{
     }
     else if(action == 'delete'){
       this.confirmDelete(event.data);
-    }else{
+
+    }else if(action == 'showLinkedRecords'){
+      this.showLinkedRecords(event.data);
+    }
+    else{
       this.crudOutput.emit(event);
     }
   }
+
 
   updateIndex(){
      // add index key for each row
@@ -105,8 +112,10 @@ export class CrudComponent implements OnInit{
 
   async getData(){
     let message = {
-      'endpoint': this.endpoint,
-      'method': 'GET',
+      "access": {
+        "action": `${this.service}:${this.controller}:list`,
+        "resource": "*",
+    },
       'data': {}
     }
 
@@ -124,7 +133,8 @@ export class CrudComponent implements OnInit{
     }
   }
 
-  openEditDialog(formTitle:any, formData:any = {}, mode:any = 'add'){ 
+  openEditDialog(formTitle:any, formData:any = {}, mode:any = 'add'){
+    formData = this.mapOptions(formData); 
     const dialogRef = this.dialog.open(DynamicFormComponent, {
       width: 'auto',
       height: 'auto',
@@ -135,7 +145,6 @@ export class CrudComponent implements OnInit{
         tableModels: this.tableModel,
         formData: formData,
         options: this.options,
-        remapOptions: true
       },
     });
 
@@ -164,12 +173,12 @@ export class CrudComponent implements OnInit{
         tableModels: this.tableModel,
         formData: this.filter,
         options: this.options,
-        remapOptions: false
       },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        result = this.remapOptions(result);
         this.filter = result;
         this.applyFilter();
       }
@@ -178,17 +187,21 @@ export class CrudComponent implements OnInit{
 
   async createRow(formData: any){
     let message = {
-      'endpoint': this.endpoint,
-      'method': 'POST',
-      'data': formData
+      "access": {
+        "action": `${this.service}:${this.controller}:create`,
+        "resource": "*",
+      },
+      'data': {
+        'input_data': formData
+      }
     }
 
     try{
       let response = await this.request.sendRequest(message)
-      let newData = response['msg']['data'];
-      newData = this.mapOptions(newData);
+      let newData = response['msg']['data']['New Record'];
 
-      this.alert('success', `${this.pageTitle} created successfully`, 
+      this.alert('success',
+        `${this.pageTitle} created successfully`, 
         [newData], this.tableModel.fields.map((field:any) => (field.label)));
 
       this.getData();
@@ -203,24 +216,25 @@ export class CrudComponent implements OnInit{
     let oldData = this.remapOptions(this.selctedRow);
 
     let message = {
-      'endpoint': this.endpoint,
-      'method': 'PUT',
+      "access": {
+        "action": `${this.service}:${this.controller}:update`,
+        "resource": "*",
+      },
       'data': {
-        'old': oldData,
-        'new': formData
+        'index_data': oldData,
+        'input_data': formData
       }
     }
 
-
     try{
       let response = await this.request.sendRequest(message)
-      let newData = response['msg']['data']['New'];
-      newData = this.mapOptions(newData);
 
-      let oldData= this.mapOptions({...this.selctedRow, 'Version': 'Old'});
-
-      this.alert('success', `${this.pageTitle} updated successfully`, 
-        [oldData, {...newData, 'Version': 'New'}], 
+      let oldData = response['msg']['data']['Old Record'];
+      let newData = response['msg']['data']['New Record'];
+      
+      this.alert('success', 
+        `${this.pageTitle} updated successfully`, 
+        [{'Version': 'Old', ...oldData}, {'Version': 'New', ...newData}], 
         ['Version', ...this.tableModel.fields.map((field:any) => (field.label))]);
       
       this.getData();
@@ -255,7 +269,6 @@ export class CrudComponent implements OnInit{
   
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        data = this.remapOptions(data);
         this.deleteRow(data);
       }
     });
@@ -263,18 +276,25 @@ export class CrudComponent implements OnInit{
 
   async deleteRow(data:any){
     let message = {
-      'endpoint': this.endpoint,
-      'method': 'DELETE',
-      'data': data
+      "access": {
+        "action": `${this.service}:${this.controller}:delete`,
+        "resource": "*",
+      },
+      'data': {
+        'index_data': data
+      }
     }
 
     try{
       let response = await this.request.sendRequest(message)
-      let deletedData = response['msg']['data'];
+      let deletedData = response['msg']['data']['Deleted Records'];
       deletedData = this.mapOptions(deletedData);
 
-      this.alert('success', `${this.pageTitle} deleted successfully`, 
-        [data], this.tableModel.fields.map((field:any) => (field.label)));
+      this.alert('success', 
+        `${this.pageTitle} deleted successfully`, 
+        [data], 
+        this.tableModel.fields.map((field:any) => (field.label))
+      );
 
       this.getData();
     }
@@ -362,6 +382,41 @@ export class CrudComponent implements OnInit{
   applyFilter() {
     this.data = this.getFilteredData();
     this.table.setData(this.data);
+  }
+
+  async showLinkedRecords(data: any) {
+    let message = {
+      "access": {
+        "action": `Common:RecordsLinker:list`,
+        "resource": `${this.service}:${this.controller}`,
+      },
+      'data': {
+        'index_data': data
+      }
+    }
+
+    try{
+      let response = await this.request.sendRequest(message)
+
+      response = response['msg']
+
+      const dialogRef = this.dialog.open(MultiTablesComponent, {
+        width: 'auto',
+        height: 'auto',
+        data: {
+          title: `${this.pageTitle} Linked Records`,
+          data: response['data'],
+          tablesSequence: response['tables_sequence'],
+          columnsOrder: response['columns_order'],
+        },
+      });
+
+      dialogRef.afterClosed().subscribe(result => {});
+
+    }
+    catch(error){
+      this.alert('error', error);
+    }
   }
 
 

@@ -132,7 +132,7 @@ export class TableComponent {
     });
   }
 
-  showLinkedServices(){
+  showLinkedRecords(){
     // get selected rows
     let selected_rows = this.selection.selected;
     
@@ -144,7 +144,7 @@ export class TableComponent {
 
     this.tableOutput.emit({
       id: this.id,
-      action: 'showLinkedServices',
+      action: 'showLinkedRecords',
       data: selected_rows[0]
     });
 

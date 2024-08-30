@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable,Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { NavigatorService } from '../../services/navigator.service';
 import { DataStoreService } from 'src/app/services/datastore.service';
 
@@ -17,7 +17,7 @@ export class SidebarComponent implements OnInit {
   private currentViewSubscription: Subscription;
 
   constructor(private navigator: NavigatorService, public datastore: DataStoreService) {
-    this.usergroup = this.datastore.get_user_info()['group'];
+    this.usergroup = this.datastore.getUserInfo()['group'];
     this.routes = this.datastore.getRoutes();
     this.currentRoute = this.navigator.getCurrentRoute();
    }
@@ -32,23 +32,26 @@ export class SidebarComponent implements OnInit {
     });
   }
 
-  primaryRouteClicked(primaryRoute: any, active: boolean, domain: string) {
+  ngOnDestroy() {
+    // Unsubscribe from domainType changes
+    this.currentViewSubscription.unsubscribe();
+  }
+
+  primaryRouteClicked(primaryRoute: any, active: boolean) {
     if (!active){
       return;
     }
-    this.datastore.changeDomainType(domain);
     this.navigator.primaryClicked(primaryRoute);
     this.routes = this.datastore.getRoutes();
     this.currentRoute = this.navigator.getCurrentRoute();
   }
 
-  secondaryRouteClicked(secondaryRoute: string, primaryRoute:string, active: boolean, domain: string)  {
+  secondaryRouteClicked(secondaryRoute: string, primaryRoute:string, active: boolean)  {
     this.expandeSecondaryRoute(secondaryRoute, primaryRoute);
     if (!active){
       return;
     }
 
-    this.datastore.changeDomainType(domain);
     this.navigator.secondaryClicked(secondaryRoute, primaryRoute);
     this.currentRoute = this.navigator.getCurrentRoute();
   }
@@ -62,12 +65,11 @@ export class SidebarComponent implements OnInit {
     
   }
 
-  tertiaryRouteClicked(event:any, tertiaryRoute: string, secondaryRoute: string, active: boolean, domain: string) {
+  tertiaryRouteClicked(event:any, tertiaryRoute: string, secondaryRoute: string, active: boolean) {
     if (!active){
       return;
     }
     event.stopPropagation();
-    this.datastore.changeDomainType(domain);
     this.navigator.tertiaryClicked(tertiaryRoute, secondaryRoute);
     this.currentRoute = this.navigator.getCurrentRoute();
   }

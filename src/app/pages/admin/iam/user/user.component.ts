@@ -32,8 +32,10 @@ export class UserComponent {
 
   async generateCredentials(data: any) {
     let message = {
-      'endpoint': 'IAMUser',
-      'method': 'GENERATE_PASSWORD',
+      "access": {
+        "action": `IAM:User:generateCredentials`,
+        "resource": "*",
+    },
       'data': data
     }
 

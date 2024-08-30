@@ -8,7 +8,7 @@ import { DataStoreService } from './datastore.service';
   providedIn: 'root'
 })
 export class NavigatorService {
-    currentRoute: any = {"primary": "customers", "secondary": "customers/clients", "tertiary": "" };
+    currentRoute: any = {"primary": "employees", "secondary": "", "tertiary": "" };
 
 
     constructor(private router: Router, public request: RequestService, public datastore: DataStoreService) {
@@ -20,14 +20,13 @@ export class NavigatorService {
     }
 
     async checkStatus() {
-        if (this.datastore.get_user_info() != null){
+        if (this.datastore.getUserInfo() != null){
             return true;
         }
 
         try{
             let response = await this.request.sendRequest({},{}, 'status', 'POST')
-            this.datastore.set_user_info(response['msg']['user_info']);
-            this.datastore.changeDomainType('Global');
+            this.datastore.setUserInfo(response['msg']['userInfo']);
             this.performRouting();
             return true;
       
@@ -96,7 +95,7 @@ export class NavigatorService {
             this.currentRoute = {"primary": "admin/iam", "secondary": "admin/iam/users", "tertiary": "" };
         }
         else{
-            this.currentRoute = {"primary": "customers", "secondary": "customers/clients", "tertiary": "" };
+            this.currentRoute = {"primary": "employees", "secondary": "", "tertiary": "" };
         }
         this.performRouting();
     }

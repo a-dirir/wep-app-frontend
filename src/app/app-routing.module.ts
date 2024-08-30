@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/app/login/login.component';
-import { CustomerRoutes } from './routes/customer.routes';
+import { LoginComponent } from './pages/login/login.component';
+import { EmployessRoutes } from './routes/employees.routes';
+import { DepartmentsRoutes } from './routes/departments.routes';
+import { TasksRoutes } from './routes/tasks.routes';
 import { AdminRoutes } from './routes/admin.routes';
 
 
@@ -9,7 +11,15 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   
   {
-    path: 'customers',  children: CustomerRoutes
+    path: 'employees',  children: EmployessRoutes
+  },
+
+  {
+    path: 'departments',  children: DepartmentsRoutes
+  },
+
+  {
+    path: 'tasks',  children: TasksRoutes
   },
 
   {

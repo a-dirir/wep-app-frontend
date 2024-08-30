@@ -1,163 +1,94 @@
 export let mainRoutes: any[] = [
     {
-        "name": "Customers",
-        "url": "customers",
+        "name": "Employees",
+        "url": "employees",
         "icon": "bx bxs-user-account",
         "access": ["*"],
-        "domain": "Global",
-        "active": false,
+        "active": true,
         "children": [
             {
-                "name": "Clients",
-                "url": "customers/clients",
+                "name": "Titles",
+                "url": "employees/titles",
                 "icon": "bx bx-loader-circle",
                 "access": ["*"],
-                "domain": "Global",
                 "active": true,
-                "children": [
-                    {
-                        "name": "Sub Clients",
-                        "url": "customers/clients/sub_clients",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                    {
-                        "name": "Contacts",
-                        "url": "customers/clients/contacts",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                    {
-                        "name": "MS Focus Points",
-                        "url": "customers/clients/focal_points",
-                        "icon": "bx bxs-user",
-                        "domain": "Global",
-                        "active": true,
-                        "access": ["*"],
-                        "children": []
-                    },
-                    {
-                        "name": "Account Managers",
-                        "url": "customers/clients/account_managers",
-                        "icon": "bx bxs-user",
-                        "domain": "Global",
-                        "active": true,
-                        "access": ["*"],
-                        "children": []
-                    },
-                    {
-                        "name": "Synthetic URLs",
-                        "url": "customers/clients/synthetics",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                ]
+                "children": []
             },
-            
             {
-                "name": "Accounts",
-                "url": "customers/account",
+                "name": "Salaries",
+                "url": "employees/salaries",
                 "icon": "bx bx-loader-circle",
                 "access": ["*"],
-                "domain": "Global",
+                "active": true,
+                "children": []
+            },
+            {
+                "name": "Leaves",
+                "url": "employees/leaves",
+                "icon": "bx bx-loader-circle",
+                "access": ["*"],
                 "active": false,
                 "children": [
                     {
-                        "name": "AWS Accounts",
-                        "url": "customers/accounts/aws",
+                        "name": "Balances",
+                        "url": "employees/leaves/balances",
                         "icon": "bx bx-loader-circle",
                         "access": ["*"],
-                        "domain": "Global",
                         "active": true,
                         "children": []
                     },
                     {
-                        "name": "Azure Accounts",
-                        "url": "customers/accounts/azure",
+                        "name": "History",
+                        "url": "employees/leaves/history",
                         "icon": "bx bx-loader-circle",
                         "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                    {
-                        "name": "M365 Accounts",
-                        "url": "customers/accounts/m365",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
                         "active": true,
                         "children": []
                     },
                 ]
             },
-
+        ]
+    },
+    {
+        "name": "Departments",
+        "url": "departments",
+        "icon": "bx bx-building-house",
+        "access": ["*"],
+        "active": true,
+        "children": [
             {
-                "name": "Opporunities",
-                "url": "customers/opportunity",
+                "name": "Staffs",
+                "url": "departments/staffs",
                 "icon": "bx bx-loader-circle",
                 "access": ["*"],
-                "domain": "Global",
-                "active": true,
-                "children": [
-                    {
-                        "name": "AWS Opportunities",
-                        "url": "customers/opportunity/aws",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                    {
-                        "name": "Azure Opportunities",
-                        "url": "customers/opportunity/azure",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                    {
-                        "name": "M365 Opportunities",
-                        "url": "customers/opportunity/m365",
-                        "icon": "bx bx-loader-circle",
-                        "access": ["*"],
-                        "domain": "Global",
-                        "active": true,
-                        "children": []
-                    },
-                ]
-            },
-
-            {
-                "name": "Products",
-                "url": "customers/products",
-                "icon": "bx bx-loader-circle",
-                "access": ["*"],
-                "domain": "Global",
                 "active": true,
                 "children": []
             },
-
             {
-                "name": "Addons",
-                "url": "customers/addons",
+                "name": "Managers",
+                "url": "departments/managers",
                 "icon": "bx bx-loader-circle",
                 "access": ["*"],
-                "domain": "Global",
                 "active": true,
                 "children": []
-            }
+            },
+        ]
+    },
+    {
+        "name": "Tasks",
+        "url": "tasks",
+        "icon": "bx bx-task",
+        "access": ["*"],
+        "active": true,
+        "children": [
+            {
+                "name": "History",
+                "url": "tasks/history",
+                "icon": "bx bx-loader-circle",
+                "access": ["*"],
+                "active": true,
+                "children": []
+            },
         ]
     },
     
@@ -170,7 +101,7 @@ export let adminRoutes: any[] = [
         "name": "IAM",
         "url": "admin/iam",
         "icon": "bx bxs-user-account",
-        "access": ["admin"],
+        "access": ["root"],
         "domain": "Global",
         "active": false,
         "children": [
@@ -178,9 +109,8 @@ export let adminRoutes: any[] = [
                 "name": "Users",
                 "url": "admin/iam/users",
                 "icon": "bx bxs-user",
-                "domain": "Global",
                 "active": true,
-                "access": ["*"],
+                "access": ["root"],
                 "children": []
             },
         ]        

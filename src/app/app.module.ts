@@ -27,7 +27,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgJsonEditorModule } from 'ang-jsoneditor' 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -45,18 +44,17 @@ import { SidebarComponent } from './website/sidebar/sidebar.component';
 import { ContentComponent } from './website/content/content.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { TableComponent } from './components/table/table.component';
-import { HomeComponent } from './pages/app/home/home.component';
 
 import { JsonFormsAngularService, JsonFormsControl } from '@jsonforms/angular';
 import { AlertComponent } from './components/alert/alert.component';
 import { MultiTablesComponent } from './components/multi-tables/multi-tables.component';
 import { InformativeTableComponent } from './components/informative-table/informative-table.component';
-import { LoginComponent } from './pages/app/login/login.component';
+import { LoginComponent } from './pages/login/login.component';
 import { DataStoreService } from './services/datastore.service';
-import { CustomerBaseComponent } from './pages/app/customers/customer.base/customer.base.component';
 
 import { UserComponent } from './pages/admin/iam/user/user.component';
 import { CrudComponent } from './components/crud/crud.component';
+import { CrudTablePageComponent } from './components/crud-table-page/crud-table-page.component';
 
 
 @NgModule({
@@ -71,14 +69,13 @@ import { CrudComponent } from './components/crud/crud.component';
     DynamicFormComponent,
 
     //admin pages components
-    HomeComponent,
     AlertComponent,
     MultiTablesComponent,
     InformativeTableComponent,
     LoginComponent,
-    CustomerBaseComponent,
     UserComponent,
-    CrudComponent
+    CrudComponent,
+    CrudTablePageComponent
 
   
   ],
@@ -119,7 +116,6 @@ import { CrudComponent } from './components/crud/crud.component';
     //other modules
     ReactiveFormsModule,
     FlexLayoutModule,
-    NgJsonEditorModule
   ],
   providers: [
     NavigatorService,

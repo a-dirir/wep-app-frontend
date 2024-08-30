@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Inject, ViewChild   } from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { angularMaterialRenderers } from '@jsonforms/angular-material';
@@ -48,6 +48,11 @@ export class DynamicFormComponent{
   }
 
   onFormChange(event: any) {
+    event = this.addOneDayToDate(event);
+    this.formData = event;
+  }
+
+  addOneDayToDate(event: any){
     for (let field in event) {
       // Check if there is a format property in the field
       if (this.formModel['properties'][field] !== undefined) {
@@ -67,11 +72,10 @@ export class DynamicFormComponent{
         }
       }
     }
-    this.formData = event;
+
+    return event;
   }
   
-
-
   closeDialogWithData(): void {
     this.dialogRef.close(this.formData);
   }

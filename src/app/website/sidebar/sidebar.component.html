@@ -2,21 +2,21 @@
     <!-- Title and Logo -->
     <div style="top: 0; position: sticky; display:block;">
         <div class="logo_item" style="justify-content: start;margin: 10px;">
-            COC Internal Portal
+            Company Internal Portal
         </div>
         <hr style="margin-top: 15px; color: white;">
     </div>
 
     <div class="menu_content" *ngFor="let primaryNode of routes; let primaryNodeIndex=index">
         <ul class="menu_items" *ngIf="primaryNode.access.includes(usergroup) || primaryNode.access.includes('*')">
-            <div  class="menu_title" (click)="primaryRouteClicked(primaryNode.url, primaryNode.active, primaryNode.domain)">
+            <div class="menu_title" (click)="primaryRouteClicked(primaryNode.url, primaryNode.active)">
                 <i class={{primaryNode.icon}}></i> {{primaryNode.name}}
             </div>
 
             <div *ngFor="let secondaryNode of primaryNode.children; let secondaryNodeIndex=index">
-                <li class="item"  *ngIf="secondaryNode.access.includes(usergroup) || secondaryNode.access.includes('*')">
+                <li class="item" *ngIf="secondaryNode.access.includes(usergroup) || secondaryNode.access.includes('*')">
                     <div class="nav_link submenu_item">
-                        <div (click)="secondaryRouteClicked(secondaryNode.url, primaryNode.url, secondaryNode.active, secondaryNode.domain)">
+                        <div (click)="secondaryRouteClicked(secondaryNode.url, primaryNode.url, secondaryNode.active)">
                             <span class="navlink_icon active">
                                 <i class={{secondaryNode.icon}}></i>
                             </span>
@@ -24,23 +24,23 @@
                                 {{secondaryNode.name}}
                             </span>
                         </div>
-                        
+
                         <div *ngIf="secondaryNode.children.length > 0">
                             <div *ngIf="isExpanded(secondaryNode.url, primaryNode.url); else secondaryNodeNotExpanded">
                                 <i class="bx bx-chevron-down arrow-left active" (click)="expandeSecondaryRoute(secondaryNode.url, primaryNode.url)"></i>
                             </div>
 
                             <ng-template #secondaryNodeNotExpanded>
-                                <i  class="bx bx-chevron-right arrow-left active" (click)="expandeSecondaryRoute(secondaryNode.url, primaryNode.url)"></i>
+                                <i class="bx bx-chevron-right arrow-left active" (click)="expandeSecondaryRoute(secondaryNode.url, primaryNode.url)"></i>
                             </ng-template>
                         </div>
-                       
+
                     </div>
 
                     <ul class="menu_items submenu" *ngIf="isExpanded(secondaryNode.url, primaryNode.url)">
                         <div *ngFor="let tertiaryNode of secondaryNode.children">
                             <div *ngIf="tertiaryNode.access.includes(usergroup) || tertiaryNode.access.includes('*')">
-                                <div (click)="tertiaryRouteClicked($event, tertiaryNode.url, secondaryNode.url, tertiaryNode.active, tertiaryNode.domain)">
+                                <div (click)="tertiaryRouteClicked($event, tertiaryNode.url, secondaryNode.url, tertiaryNode.active)">
                                     <li *ngIf="currentRoute.tertiary == tertiaryNode.url; else tertiaryNodeNotActive" class="item">
                                         <div class="nav_link sublink">
                                             <span class="active">
