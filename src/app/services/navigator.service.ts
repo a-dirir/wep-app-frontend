@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import { RequestService } from './request.service';
 import { DataStoreService } from './datastore.service';
 
+// create a service to handle routing between components and pages in the application
 @Injectable({
   providedIn: 'root'
 })

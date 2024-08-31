@@ -5,6 +5,7 @@ import { angularMaterialRenderers } from '@jsonforms/angular-material';
 import { MatDialogRef } from '@angular/material/dialog';
 
 
+// create a component to display a dynamic form based on the formModel and formUIModel using jsonforms
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
@@ -22,7 +23,7 @@ export class DynamicFormComponent{
 
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: any, private dialogRef: MatDialogRef<DynamicFormComponent>, private dateAdapter: DateAdapter<any>) {
-    this.dateAdapter.setLocale('en-GB'); // or any other locale
+    this.dateAdapter.setLocale('en-GB');
     this.title = dialogData.title;
     this.formModel = dialogData.formModel;
     this.formUIModel = dialogData.formUIModel;
@@ -34,7 +35,9 @@ export class DynamicFormComponent{
     this.formData = dialogData.formData;
    }
 
-   populateOptions(options: any){
+  // Populate the any select input field depending on values from other tables
+  // options is an object with keys as field names and values as arrays of options retrieved from the backend
+  populateOptions(options: any){
     for(let field in this.formModel['properties']){
 
       if(options[field]){
@@ -47,11 +50,14 @@ export class DynamicFormComponent{
     }
   }
 
+  // Function to handle form change events
   onFormChange(event: any) {
     event = this.addOneDayToDate(event);
     this.formData = event;
   }
 
+  // Function to add one day to a date field, for some reason the date is always one day behind
+  // It is also a good example of how to preprocess form data before sending it to the backend
   addOneDayToDate(event: any){
     for (let field in event) {
       // Check if there is a format property in the field
@@ -79,7 +85,5 @@ export class DynamicFormComponent{
   closeDialogWithData(): void {
     this.dialogRef.close(this.formData);
   }
-
-  
 
 }

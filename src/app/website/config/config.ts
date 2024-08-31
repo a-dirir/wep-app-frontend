@@ -1,3 +1,5 @@
+// This file contains the configuration for the website, including the routes for the main and admin views.
+
 export let mainRoutes: any[] = [
     {
         "name": "Employees",
@@ -93,8 +95,6 @@ export let mainRoutes: any[] = [
     },
     
 ]
-
-
 
 export let adminRoutes: any[] = [
     {

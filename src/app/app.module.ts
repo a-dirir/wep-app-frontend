@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 
+// angular material modules
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule} from '@angular/material/input';
-import {MatDialogModule, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -31,30 +31,35 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatCardModule} from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
+// jsonforms modules & services
 import { JsonFormsModule } from '@jsonforms/angular';
 import { JsonFormsAngularMaterialModule } from '@jsonforms/angular-material';
+import { JsonFormsAngularService } from '@jsonforms/angular';
 
-// services
+// custom services
 import { NavigatorService } from './services/navigator.service';
 import { RequestService } from './services/request.service';
+import { DataStoreService } from './services/datastore.service';
 
-// components
+
+// main page components
 import { AppComponent } from './app.component';
 import { SidebarComponent } from './website/sidebar/sidebar.component';
 import { ContentComponent } from './website/content/content.component';
+
+// reusable components
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { TableComponent } from './components/table/table.component';
-
-import { JsonFormsAngularService, JsonFormsControl } from '@jsonforms/angular';
 import { AlertComponent } from './components/alert/alert.component';
 import { MultiTablesComponent } from './components/multi-tables/multi-tables.component';
 import { InformativeTableComponent } from './components/informative-table/informative-table.component';
-import { LoginComponent } from './pages/login/login.component';
-import { DataStoreService } from './services/datastore.service';
-
-import { UserComponent } from './pages/admin/iam/user/user.component';
 import { CrudComponent } from './components/crud/crud.component';
 import { CrudTablePageComponent } from './components/crud-table-page/crud-table-page.component';
+
+// custom pages components
+import { LoginComponent } from './pages/login/login.component';
+import { UserComponent } from './pages/admin/iam/user/user.component';
+
 
 
 @NgModule({
@@ -110,6 +115,7 @@ import { CrudTablePageComponent } from './components/crud-table-page/crud-table-
     MatCardModule,
     MatTooltipModule,
 
+    //jsonforms modules
     JsonFormsModule,
     JsonFormsAngularMaterialModule,
 

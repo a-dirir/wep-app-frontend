@@ -1,7 +1,8 @@
+// components
+import { UserComponent } from '../pages/admin/iam/user/user.component';
+
 // data models
 import * as userModel from '../models/admin/authorization/user';
-
-import { UserComponent } from '../pages/admin/iam/user/user.component';
 
 
 export const AdminRoutes = [

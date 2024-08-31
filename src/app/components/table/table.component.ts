@@ -6,6 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 
 
+// create a table component to display data in a table format with options to add, edit, delete, filter, download, and show linked records
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',

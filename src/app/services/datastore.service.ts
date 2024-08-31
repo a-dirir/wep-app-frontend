@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { mainRoutes, adminRoutes } from '../website/config/config';
 import { RequestService } from './request.service';
 
+
+// create a service to store data and share it between components
 @Injectable({
   providedIn: 'root'
 })
@@ -23,10 +25,8 @@ export class DataStoreService {
   }
 
   getUserInfo(){
-    return this.userInfo;
+    return this.userInfo;    
   }
-
-
 
   get currentView$() {
     return this._currentView.asObservable();

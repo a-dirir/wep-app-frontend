@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { NavigatorService } from '../../services/navigator.service';
 import { DataStoreService } from 'src/app/services/datastore.service';
 
+
+// create a component to display the sidebar in the application
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',

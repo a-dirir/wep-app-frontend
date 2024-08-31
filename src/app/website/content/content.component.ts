@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigatorService } from '../../services/navigator.service';
 import { DataStoreService } from 'src/app/services/datastore.service';
-import { angularMaterialRenderers } from '@jsonforms/angular-material';
-import { Subscription } from 'rxjs';
 
+
+// create a component to display the main content in the application
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',

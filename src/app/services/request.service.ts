@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 // create a function to send a request to the server
-
 @Injectable({
     providedIn: 'root'
   })
@@ -32,7 +31,7 @@ export class RequestService {
                 window.location.href = '/login';
             }
 
-            // check if response is 401, then redirect to login page
+            // check if response is 400, then throw an error
             else if (response.status == 400) {
                 return response.json().then(function (error: any) {
                     var e = new Error(error['error']);
@@ -40,14 +39,13 @@ export class RequestService {
                 });
             }
 
+            // throw an error if response is not 200, 400, or 401
             else{
                 return response.json().then(function (error: any) {
                     var e = new Error(error['error']);
                     throw e;
                 });
-            }
-        
-            
+            }    
         });
     }
 }

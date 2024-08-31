@@ -2,6 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 
+
+// create a component to display an alert dialog
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',

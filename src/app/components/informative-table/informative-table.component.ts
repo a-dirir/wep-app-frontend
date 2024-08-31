@@ -4,6 +4,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
+// create a component to display an informative table
 @Component({
   selector: 'app-informative-table',
   templateUrl: './informative-table.component.html',
@@ -35,32 +36,9 @@ export class InformativeTableComponent {
       if (this.paginator && this.paginator.length > 0 && this.sort && this.sort.length > 0) {
         this.dataSource.paginator = this.paginator.toArray()[0];
         this.dataSource.sort = this.sort.toArray()[0];
-      } else {
-      }
-      // Handle the change in data
+      } 
     }
 
   }
-
-  formatData(data: any) {
-    let new_data = []
-    if (data.length <= 4) {
-      return data;
-    }
-
-    // push only first two rows, one row showing ... for each key, and the last two rows
-    new_data.push(data[0]);
-    
-    let row:any = {}
-    for (let key of this.cols) {
-      row[key] = '...';
-    }
-    new_data.push(row);
-
-    new_data.push(data[data.length - 2-1]);
-
-    return new_data;
-  }
-
 
 }

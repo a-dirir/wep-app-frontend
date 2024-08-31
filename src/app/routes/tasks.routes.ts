@@ -18,4 +18,4 @@ export const TasksRoutes = [
         data:  {pageTitle: 'Tasks History', service: 'Tasks', controller: 'TaskHistory', dataModel: tasksHistoryModel}
     },
    
-    ]
+]

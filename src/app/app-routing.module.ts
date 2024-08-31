@@ -7,6 +7,7 @@ import { TasksRoutes } from './routes/tasks.routes';
 import { AdminRoutes } from './routes/admin.routes';
 
 
+// Define the routes
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   
@@ -30,12 +31,10 @@ const routes: Routes = [
 
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 
-
-
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

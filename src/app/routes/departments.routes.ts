@@ -24,4 +24,4 @@ export const DepartmentsRoutes = [
         data:  {pageTitle: 'Department Managers', service: 'Departments', controller: 'DepartmentManagers',  dataModel: departmentManagersModel}
     },
 
-    ]
+]
